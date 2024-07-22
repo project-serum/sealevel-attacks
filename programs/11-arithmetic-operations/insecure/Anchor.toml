@@ -1,0 +1,20 @@
+[toolchain]
+anchor_version = "0.30.1"
+solana_version = "1.18.17"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.localnet]
+arithmetic_operations = "CCqc8QN2c33h6e17ykCnFJG4D1i9T9fR8hTXVvwy7qXp"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "Localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "cargo test"
