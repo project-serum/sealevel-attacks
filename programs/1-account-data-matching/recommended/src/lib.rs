@@ -7,7 +7,7 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod account_data_matching_recommended {
     use super::*;
 
-    pub fn log_message(ctx: Context<LogMessage>) -> ProgramResult {
+    pub fn log_message(ctx: Context<LogMessage>) -> Result<()> {
         msg!("Your account balance is: {}", ctx.accounts.token.amount);
         Ok(())
     }
