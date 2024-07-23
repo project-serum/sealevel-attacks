@@ -7,7 +7,7 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod pda_sharing_secure {
     use super::*;
 
-    pub fn withdraw_tokens(ctx: Context<WithdrawTokens>) -> ProgramResult {
+    pub fn withdraw_tokens(ctx: Context<WithdrawTokens>) -> Result<()> {
         let amount = ctx.accounts.vault.amount;
         let seeds = &[
             ctx.accounts.pool.withdraw_destination.as_ref(),

@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
-use spl_token::state::Account as SplTokenAccount;
 use spl_token::solana_program::program_pack::Pack;
+use spl_token::state::Account as SplTokenAccount;
 
 declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 

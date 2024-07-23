@@ -25,9 +25,7 @@ pub mod closing_accounts_insecure_still_still {
 
         let dst: &mut [u8] = &mut data;
         let mut cursor = std::io::Cursor::new(dst);
-        cursor
-            .write_all(&[0; 8])
-            .unwrap();
+        cursor.write_all(&[0; 8]).unwrap();
 
         Ok(())
     }

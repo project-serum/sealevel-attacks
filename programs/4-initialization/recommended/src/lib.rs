@@ -12,7 +12,6 @@ pub mod reinitialization_4 {
     }
 }
 
-
 #[derive(Accounts)]
 pub struct Init<'info> {
     #[account(init, payer = authority, space = 8+32)]

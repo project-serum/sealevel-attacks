@@ -8,7 +8,7 @@ pub mod duplicate_mutable_accounts_secure {
 
     pub fn update(ctx: Context<Update>, a: u64, b: u64) -> Result<()> {
         if ctx.accounts.user_a.key() == ctx.accounts.user_b.key() {
-            return Err(ProgramError::InvalidArgument.into())
+            return Err(ProgramError::InvalidArgument.into());
         }
         let user_a = &mut ctx.accounts.user_a;
         let user_b = &mut ctx.accounts.user_b;
