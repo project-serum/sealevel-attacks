@@ -6,9 +6,9 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod duplicate_mutable_accounts_secure {
     use super::*;
 
-    pub fn update(ctx: Context<Update>, a: u64, b: u64) -> ProgramResult {
+    pub fn update(ctx: Context<Update>, a: u64, b: u64) -> Result<()> {
         if ctx.accounts.user_a.key() == ctx.accounts.user_b.key() {
-            return Err(ProgramError::InvalidArgument)
+            return Err(ProgramError::InvalidArgument.into())
         }
         let user_a = &mut ctx.accounts.user_a;
         let user_b = &mut ctx.accounts.user_b;

@@ -8,10 +8,10 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod reinitialization_secure_recommended {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> ProgramResult {
+    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
         let mut user = User::try_from_slice(&ctx.accounts.user.data.borrow()).unwrap();
         if !user.discriminator {
-            return Err(ProgramError::InvalidAccountData);
+            return Err(ProgramError::InvalidAccountData.into());
         }
 
         user.authority = ctx.accounts.authority.key();

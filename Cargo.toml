@@ -1,14 +1,25 @@
 [workspace]
 members = [
     "programs/0-signer-authorization/*",
-    "programs/1-account-data-matching/*",
-    "programs/2-owner-checks/*",
+    #"programs/1-account-data-matching/*",
+    #"programs/2-owner-checks/*",
     "programs/3-type-cosplay/*",
     "programs/4-initialization/*",
-    "programs/5-arbitrary-cpi/*",
+    #"programs/5-arbitrary-cpi/*",
     "programs/6-duplicate-mutable-accounts/*",
-    "programs/7-bump-seed-canonicalization/*",
-    "programs/8-pda-sharing/*",
-    "programs/9-closing-accounts/*",
-    "programs/10-sysvar-address-checking/*"
+    #"programs/7-bump-seed-canonicalization/*",
+    #"programs/8-pda-sharing/*",
+    #"programs/9-closing-accounts/*",
+    #"programs/10-sysvar-address-checking/*"
 ]
+resolver = "2"
+
+[profile.release]
+overflow-checks = true
+lto = "fat"
+codegen-units = 1
+
+[profile.release.build-override]
+opt-level = 3
+incremental = false
+codegen-units = 1

@@ -6,9 +6,9 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod signer_authorization_secure {
     use super::*;
 
-    pub fn log_message(ctx: Context<LogMessage>) -> ProgramResult {
+    pub fn log_message(ctx: Context<LogMessage>) -> Result<()> {
         if !ctx.accounts.authority.is_signer {
-            return Err(ProgramError::MissingRequiredSignature);
+            return Err(ProgramError::MissingRequiredSignature.into());
         }
         msg!("GM {}", ctx.accounts.authority.key().to_string());
         Ok(())

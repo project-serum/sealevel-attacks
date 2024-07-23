@@ -6,7 +6,7 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod duplicate_mutable_accounts_recommended {
     use super::*;
 
-    pub fn update(ctx: Context<Update>, a: u64, b: u64) -> ProgramResult {
+    pub fn update(ctx: Context<Update>, a: u64, b: u64) -> Result<()> {
         let user_a = &mut ctx.accounts.user_a;
         let user_b = &mut ctx.accounts.user_b;
 

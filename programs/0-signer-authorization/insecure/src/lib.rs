@@ -5,7 +5,7 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod signer_authorization_insecure {
     use super::*;
 
-    pub fn log_message(ctx: Context<LogMessage>) -> ProgramResult {
+    pub fn log_message(ctx: Context<LogMessage>) -> Result<()> {
         msg!("GM {}", ctx.accounts.authority.key().to_string());
         Ok(())
     }
