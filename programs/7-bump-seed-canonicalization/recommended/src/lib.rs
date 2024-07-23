@@ -6,7 +6,7 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod bump_seed_canonicalization_recommended {
     use super::*;
 
-    pub fn set_value(ctx: Context<BumpSeed>, key: u64, new_value: u64) -> ProgramResult {
+    pub fn set_value(ctx: Context<BumpSeed>, key: u64, new_value: u64) -> Result<()> {
         ctx.accounts.data.value = new_value;
         Ok(())
     }
