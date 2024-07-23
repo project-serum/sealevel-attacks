@@ -1,4 +1,3 @@
-use anchor_lang::__private::CLOSED_ACCOUNT_DISCRIMINATOR;
 use anchor_lang::prelude::*;
 use std::io::{Cursor, Write};
 use std::ops::DerefMut;
@@ -9,7 +8,7 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod closing_accounts_secure {
     use super::*;
 
-    pub fn close(ctx: Context<Close>) -> ProgramResult {
+    pub fn close(ctx: Context<Close>) -> Result<()> {
         let dest_starting_lamports = ctx.accounts.destination.lamports();
 
         let account = ctx.accounts.account.to_account_info();
@@ -25,12 +24,12 @@ pub mod closing_accounts_secure {
 
         let dst: &mut [u8] = &mut data;
         let mut cursor = Cursor::new(dst);
-        cursor.write_all(&CLOSED_ACCOUNT_DISCRIMINATOR).unwrap();
+        cursor.write_all(&[0; 8]).unwrap();
 
         Ok(())
     }
 
-    pub fn force_defund(ctx: Context<ForceDefund>) -> ProgramResult {
+    pub fn force_defund(ctx: Context<ForceDefund>) -> Result<()> {
         let account = &ctx.accounts.account;
 
         let data = account.try_borrow_data()?;
@@ -38,8 +37,8 @@ pub mod closing_accounts_secure {
 
         let mut discriminator = [0u8; 8];
         discriminator.copy_from_slice(&data[0..8]);
-        if discriminator != CLOSED_ACCOUNT_DISCRIMINATOR {
-            return Err(ProgramError::InvalidAccountData);
+        if discriminator != [0; 8] {
+            return Err(ProgramError::InvalidAccountData.into());
         }
 
         let dest_starting_lamports = ctx.accounts.destination.lamports();
