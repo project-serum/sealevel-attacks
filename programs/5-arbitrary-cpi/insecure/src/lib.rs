@@ -1,5 +1,6 @@
 use anchor_lang::prelude::*;
 use anchor_lang::solana_program;
+use anchor_lang::solana_program::system_instruction::transfer;
 
 declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 
@@ -7,22 +8,19 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod arbitrary_cpi_insecure {
     use super::*;
 
-    pub fn cpi(ctx: Context<Cpi>, amount: u64) -> ProgramResult {
-        solana_program::program::invoke(
-            &spl_token::instruction::transfer(
-                ctx.accounts.token_program.key,
+    pub fn cpi(ctx: Context<Cpi>, amount: u64) -> Result<()> {
+        Ok(solana_program::program::invoke(
+            &transfer(
                 ctx.accounts.source.key,
                 ctx.accounts.destination.key,
-                ctx.accounts.authority.key,
-                &[],
                 amount,
-            )?,
+            ),
             &[
                 ctx.accounts.source.clone(),
                 ctx.accounts.destination.clone(),
                 ctx.accounts.authority.clone(),
             ],
-        )
+        )?)
     }
 }
 

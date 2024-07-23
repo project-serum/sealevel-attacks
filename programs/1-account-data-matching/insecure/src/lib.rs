@@ -1,5 +1,5 @@
 use anchor_lang::prelude::*;
-use anchor_lang::solana_program::program_pack::Pack;
+use spl_token::solana_program::program_pack::Pack;
 use spl_token::state::Account as SplTokenAccount;
 
 declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
@@ -8,8 +8,8 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod account_data_matching_insecure {
     use super::*;
 
-    pub fn log_message(ctx: Context<LogMessage>) -> ProgramResult {
-        let token = SplTokenAccount::unpack(&ctx.accounts.token.data.borrow())?;
+    pub fn log_message(ctx: Context<LogMessage>) -> Result<()> {
+        let token = SplTokenAccount::unpack(&ctx.accounts.token.data.borrow()).unwrap();
         msg!("Your account balance is: {}", token.amount);
         Ok(())
     }

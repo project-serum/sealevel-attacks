@@ -8,7 +8,7 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod initialization_insecure {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> ProgramResult {
+    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
         let mut user = User::try_from_slice(&ctx.accounts.user.data.borrow()).unwrap();
 
         user.authority = ctx.accounts.authority.key();

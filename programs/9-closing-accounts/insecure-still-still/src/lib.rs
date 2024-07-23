@@ -8,7 +8,7 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod closing_accounts_insecure_still_still {
     use super::*;
 
-    pub fn close(ctx: Context<Close>) -> ProgramResult {
+    pub fn close(ctx: Context<Close>) -> Result<()> {
         let account = ctx.accounts.account.to_account_info();
 
         let dest_starting_lamports = ctx.accounts.destination.lamports();
@@ -25,9 +25,7 @@ pub mod closing_accounts_insecure_still_still {
 
         let dst: &mut [u8] = &mut data;
         let mut cursor = std::io::Cursor::new(dst);
-        cursor
-            .write_all(&anchor_lang::__private::CLOSED_ACCOUNT_DISCRIMINATOR)
-            .unwrap();
+        cursor.write_all(&[0; 8]).unwrap();
 
         Ok(())
     }

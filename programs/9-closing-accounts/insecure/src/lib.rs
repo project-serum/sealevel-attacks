@@ -6,7 +6,7 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod closing_accounts_insecure {
     use super::*;
 
-    pub fn close(ctx: Context<Close>) -> ProgramResult {
+    pub fn close(ctx: Context<Close>) -> Result<()> {
         let dest_starting_lamports = ctx.accounts.destination.lamports();
 
         **ctx.accounts.destination.lamports.borrow_mut() = dest_starting_lamports

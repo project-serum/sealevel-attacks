@@ -7,7 +7,7 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod pda_sharing_insecure {
     use super::*;
 
-    pub fn withdraw_tokens(ctx: Context<WithdrawTokens>) -> ProgramResult {
+    pub fn withdraw_tokens(ctx: Context<WithdrawTokens>) -> Result<()> {
         let amount = ctx.accounts.vault.amount;
         let seeds = &[ctx.accounts.pool.mint.as_ref(), &[ctx.accounts.pool.bump]];
         token::transfer(ctx.accounts.transfer_ctx().with_signer(&[seeds]), amount)

@@ -6,12 +6,11 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod reinitialization_4 {
     use super::*;
 
-    pub fn init(_ctx: Context<Init>) -> ProgramResult {
+    pub fn init(_ctx: Context<Init>) -> Result<()> {
         msg!("GM");
         Ok(())
     }
 }
-
 
 #[derive(Accounts)]
 pub struct Init<'info> {

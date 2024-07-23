@@ -7,7 +7,7 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 pub mod type_cosplay_recommended {
     use super::*;
 
-    pub fn update_user(ctx: Context<UpdateUser>) -> ProgramResult {
+    pub fn update_user(ctx: Context<UpdateUser>) -> Result<()> {
         msg!("GM {}", ctx.accounts.user.authority);
         Ok(())
     }
