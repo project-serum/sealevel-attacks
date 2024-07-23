@@ -9,13 +9,13 @@ crate-type = ["cdylib", "lib"]
 name = "owner_checks_recommended"
 
 [features]
+default = []
+cpi = ["no-entrypoint"]
 no-entrypoint = []
 no-idl = []
 no-log-ix-name = []
-cpi = ["no-entrypoint"]
-default = []
+idl-build = ["anchor-lang/idl-build"]
 
 [dependencies]
-anchor-lang = "0.20.1"
-anchor-spl = "0.20.1"
-spl-token = "3.2.0"
+anchor-lang = "0.30.1"
+anchor-spl = "0.30.1"
