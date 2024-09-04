@@ -8,6 +8,7 @@ pub mod owner_checks_recommended {
     use super::*;
 
     pub fn log_message(ctx: Context<LogMessage>) -> ProgramResult {
+        // Log the token amount directly from the TokenAccount
         msg!("Your account balance is: {}", ctx.accounts.token.amount);
         Ok(())
     }
@@ -15,7 +16,9 @@ pub mod owner_checks_recommended {
 
 #[derive(Accounts)]
 pub struct LogMessage<'info> {
+    // Token account information with a constraint to ensure the authority is the owner
     #[account(constraint = authority.key == &token.owner)]
     token: Account<'info, TokenAccount>,
+    // Authority that must sign the transaction
     authority: Signer<'info>,
 }
