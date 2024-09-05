@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 use borsh::{BorshDeserialize, BorshSerialize};
 
+// Declare the program ID
 declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 
 #[program]
@@ -8,13 +9,20 @@ pub mod type_cosplay_insecure {
     use super::*;
 
     pub fn update_user(ctx: Context<UpdateUser>) -> ProgramResult {
+        // Attempt to deserialize the user account data
         let user = User::try_from_slice(&ctx.accounts.user.data.borrow()).unwrap();
+
+        // Check if the owner of the account is the program itself
         if ctx.accounts.user.owner != ctx.program_id {
             return Err(ProgramError::IllegalOwner);
         }
+
+        // Check if the authority matches the one stored in the user account
         if user.authority != ctx.accounts.authority.key() {
             return Err(ProgramError::InvalidAccountData);
         }
+
+        // Log a message for debugging purposes
         msg!("GM {}", user.authority);
         Ok(())
     }
@@ -22,16 +30,16 @@ pub mod type_cosplay_insecure {
 
 #[derive(Accounts)]
 pub struct UpdateUser<'info> {
-    user: AccountInfo<'info>,
-    authority: Signer<'info>,
+    user: AccountInfo<'info>, // User account (AccountInfo used instead of Account<User>)
+    authority: Signer<'info>, // The signer who is expected to be the authority
 }
 
 #[derive(BorshSerialize, BorshDeserialize)]
 pub struct User {
-    authority: Pubkey,
+    authority: Pubkey, // Public key of the authority who can update the user
 }
 
 #[derive(BorshSerialize, BorshDeserialize)]
 pub struct Metadata {
-    account: Pubkey,
+    account: Pubkey, // Metadata account holding a public key
 }
