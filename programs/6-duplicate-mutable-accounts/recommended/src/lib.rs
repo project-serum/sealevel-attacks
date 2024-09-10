@@ -10,6 +10,7 @@ pub mod duplicate_mutable_accounts_recommended {
         let user_a = &mut ctx.accounts.user_a;
         let user_b = &mut ctx.accounts.user_b;
 
+        // Updating the data fields of both accounts
         user_a.data = a;
         user_b.data = b;
         Ok(())
@@ -18,6 +19,7 @@ pub mod duplicate_mutable_accounts_recommended {
 
 #[derive(Accounts)]
 pub struct Update<'info> {
+    // Constraint ensures that user_a and user_b are different accounts
     #[account(constraint = user_a.key() != user_b.key())]
     user_a: Account<'info, User>,
     user_b: Account<'info, User>,
