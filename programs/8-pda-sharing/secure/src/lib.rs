@@ -9,10 +9,8 @@ pub mod pda_sharing_secure {
 
     pub fn withdraw_tokens(ctx: Context<WithdrawTokens>) -> ProgramResult {
         let amount = ctx.accounts.vault.amount;
-        let seeds = &[
-            ctx.accounts.pool.withdraw_destination.as_ref(),
-            &[ctx.accounts.pool.bump],
-        ];
+        // Withdraw using PDA derived from withdraw_destination for secure withdrawal.
+        let seeds = &[ctx.accounts.pool.withdraw_destination.as_ref(), &[ctx.accounts.pool.bump]];
         token::transfer(ctx.accounts.transfer_ctx().with_signer(&[seeds]), amount)
     }
 }

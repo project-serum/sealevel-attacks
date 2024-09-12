@@ -9,10 +9,8 @@ pub mod pda_sharing_recommended {
 
     pub fn withdraw_tokens(ctx: Context<WithdrawTokens>) -> ProgramResult {
         let amount = ctx.accounts.vault.amount;
-        let seeds = &[
-            ctx.accounts.pool.withdraw_destination.as_ref(),
-            &[ctx.accounts.pool.bump],
-        ];
+        // Using the withdraw_destination instead of mint to create the seeds, which is more secure.
+        let seeds = &[ctx.accounts.pool.withdraw_destination.as_ref(), &[ctx.accounts.pool.bump]];
         token::transfer(ctx.accounts.transfer_ctx().with_signer(&[seeds]), amount)
     }
 }
@@ -20,11 +18,11 @@ pub mod pda_sharing_recommended {
 #[derive(Accounts)]
 pub struct WithdrawTokens<'info> {
     #[account(
-				has_one = vault,
-				has_one = withdraw_destination,
-				seeds = [withdraw_destination.key().as_ref()],
-				bump = pool.bump,
-		)]
+        has_one = vault,
+        has_one = withdraw_destination,
+        seeds = [withdraw_destination.key().as_ref()], // Adds PDA security by making sure the seed is deterministic.
+        bump = pool.bump,
+    )]
     pool: Account<'info, TokenPool>,
     vault: Account<'info, TokenAccount>,
     withdraw_destination: Account<'info, TokenAccount>,
@@ -48,6 +46,6 @@ impl<'info> WithdrawTokens<'info> {
 pub struct TokenPool {
     vault: Pubkey,
     mint: Pubkey,
-    withdraw_destination: Pubkey,
+    withdraw_destination: Pubkey, // The key used to derive the PDA is now secure.
     bump: u8,
 }

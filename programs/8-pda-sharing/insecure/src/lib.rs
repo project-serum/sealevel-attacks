@@ -9,6 +9,8 @@ pub mod pda_sharing_insecure {
 
     pub fn withdraw_tokens(ctx: Context<WithdrawTokens>) -> ProgramResult {
         let amount = ctx.accounts.vault.amount;
+        // Using the mint field as part of the seeds for the PDA, which allows 
+        // an attacker to manipulate the mint value and withdraw funds.
         let seeds = &[ctx.accounts.pool.mint.as_ref(), &[ctx.accounts.pool.bump]];
         token::transfer(ctx.accounts.transfer_ctx().with_signer(&[seeds]), amount)
     }
@@ -39,7 +41,7 @@ impl<'info> WithdrawTokens<'info> {
 #[account]
 pub struct TokenPool {
     vault: Pubkey,
-    mint: Pubkey,
+    mint: Pubkey, // Vulnerable because it allows manipulation of the mint field.
     withdraw_destination: Pubkey,
     bump: u8,
 }
