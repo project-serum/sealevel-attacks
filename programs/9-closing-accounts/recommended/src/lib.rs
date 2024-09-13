@@ -13,10 +13,11 @@ pub mod closing_accounts_recommended {
 
 #[derive(Accounts)]
 pub struct Close<'info> {
+    // Automatically transfer lamports from the account to the destination and close the account
     #[account(mut, close = destination)]
     account: Account<'info, Data>,
     #[account(mut)]
-    destination: AccountInfo<'info>,
+    destination: AccountInfo<'info>, // Receiver of the remaining lamports
 }
 
 #[account]
