@@ -7,6 +7,7 @@ pub mod secure {
     use super::*;
 
     pub fn check_sysvar_address(ctx: Context<CheckSysvarAddress>) -> Result<()> {
+        // Validates that the passed rent account is actually the Sysvar Rent account by comparing its key to the system's Rent ID.
         require_eq!(ctx.accounts.rent.key(), sysvar::rent::ID);
         msg!("Rent Key -> {}", ctx.accounts.rent.key().to_string());
         Ok(())
@@ -15,5 +16,6 @@ pub mod secure {
 
 #[derive(Accounts)]
 pub struct CheckSysvarAddress<'info> {
+    // Rent account is again an AccountInfo, but manual validation is enforced to check if it matches the Sysvar Rent account.
     rent: AccountInfo<'info>,
 }
